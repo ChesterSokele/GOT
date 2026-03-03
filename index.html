@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girls of Tomorrow · Namibia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+            color: #111;
+            background-color: #fcfcfc;
+            scroll-behavior: smooth;
+        }
+
+        /* ----- navigation (logo kept, refined) ----- */
+        .navbar {
+            background: white;
+            box-shadow: 0 6px 18px rgba(0, 40, 30, 0.08);
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* your logo image appears here exactly as you placed it */
+        .brand-logo {
+            width: auto;
+            height: 60px;
+            max-width: 180px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0b3b2f;
+            line-height: 1.2;
+        }
+        .logo-text small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #4a6f60;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #1e3d35;
+            font-size: 1.1rem;
+            transition: 0.2s;
+            padding: 0.4rem 0.1rem;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: #f4c542;
+            color: #0b3b2f;
+        }
+
+        /* ----- hero slideshow (your background images remain) ----- */
+        .hero-slideshow {
+            height: 85vh;
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
+            background-color: rgb(90, 149, 135);
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.3s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .slide-overlay {
+            background: linear-gradient(145deg, rgba(45, 40, 4, 0.85) 0%, rgba(18, 65, 23, 0.7) 100%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero-title span {
+            color: #f4c542;
+        }
+
+        .hero-sub {
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin: 1rem 0;
+            text-transform: uppercase;
+        }
+
+        .hero-tagline {
+            font-size: 1.5rem;
+            max-width: 800px;
+            background: rgba(0,0,0,0.3);
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            backdrop-filter: blur(3px);
+        }
+
+        .slide-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            gap: 16px;
+        }
+
+        .dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.2s;
+        }
+
+        .dot.active-dot {
+            background: #f4c542;
+            transform: scale(1.3);
+            border-color: white;
+        }
+
+        /* ----- sections ----- */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #0b3b2f;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 5px;
+            background: #f4c542;
+        }
+
+        .section-title.center {
+            text-align: center;
+        }
+        .section-title.center:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* ----- mission (image kept) ----- */
+        .mission-wrap {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .mission-text {
+            flex: 2;
+            background: #f2f7f5;
+            padding: 2.5rem;
+            border-radius: 40px;
+            font-size: 1.3rem;
+            border-left: 8px solid #f4c542;
+        }
+
+        .mission-img-placeholder {
+            flex: 1;
+            min-width: 250px;
+            height: 300px;
+            border-radius: 40px;
+            /* your original svg image inside — untouched */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="%230b3b2f" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5.5 20v-2a6 6 0 0 1 12 0v2"/><path d="M16 11.5A6 6 0 0 1 21 17v2"/><path d="M8 11.5A6 6 0 0 0 3 17v2"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-color: #d9e3df;
+        }
+
+        /* ----- programs cards with your images (I fixed the broken syntax) ----- */
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.05);
+            border: 1px solid #e0e8e5;
+            overflow: hidden;
+            transition: 0.25s;
+        }
+
+        .program-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 35px rgba(11,59,47,0.15);
+        }
+
+        /* consistent card image area — now using your exact background-image references */
+        .card-img {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* your original image filenames: com.jpg, hug.jpg, comu.jpg, staf.jpg  (preserved) */
+        .card-img-1 { background-image: url('com.jpg'); }
+        .card-img-2 { background-image: url('hug.jpg'); }
+        .card-img-3 { background-image: url('comu.jpg'); }
+        .card-img-4 { background-image: url('staf.jpg'); }
+
+        .card-content {
+            padding: 2rem 1.5rem;
+        }
+
+        .card-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #0b3b2f;
+        }
+
+        /* impact section (images preserved as svg patterns) */
+        .impact-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .impact-row {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #faf4e6;
+            border-radius: 40px;
+            padding: 2rem;
+        }
+
+        .impact-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .impact-img {
+            flex: 1;
+            min-width: 220px;
+            height: 220px;
+            border-radius: 40px;
+            /* original svg icons kept exactly */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="%230b3b2f" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1"/><path d="M4 22h16"/><path d="M4 15h16"/><path d="M4 22V15"/><path d="M20 22V15"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 80px;
+            background-color: #e0ebe5;
+        }
+
+        .impact-quote {
+            flex: 2;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #1d3b32;
+        }
+
+        /* ----- contact / cta (background image kept) ----- */
+        .contact-cta {
+            background: linear-gradient(115deg, #0b3b2f 0%, #1f6e5a 100%);
+            border-radius: 50px;
+            padding: 3.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-cta::before {
+            content: "";
+            position: absolute;
+            top: -20px; right: -20px;
+            width: 300px; height: 300px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="%23f4c542" opacity="0.1"><circle cx="150" cy="50" r="80"/></svg>');
+            background-size: cover;
+            transform: rotate(15deg);
+        }
+
+        .contact-flex {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-text {
+            flex: 2;
+        }
+
+        .contact-image-placeholder {
+            flex: 1;
+            min-width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            border: 4px solid #f4c542;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M12 2v4"/><path d="M12 22v-4"/><path d="M4 12H2"/><path d="M22 12h-2"/><path d="M19.07 4.93l-2.83 2.83"/><path d="M7.76 16.24l-2.83 2.83"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 80px;
+        }
+
+        .footer {
+            background: #0f2c24;
+            color: #ccc;
+            padding: 3rem 2rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .footer strong { color: #f4c542; }
+
+        .button {
+            background: #f4c542;
+            color: #0b3b2f;
+            padding: 0.9rem 2.5rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: inline-block;
+            border: 2px solid #f4c542;
+            transition: 0.2s;
+        }
+        .button:hover {
+            background: transparent;
+            color: #f4c542;
+        }
+
+        @media (max-width: 800px) {
+            .navbar { flex-direction: column; gap: 1rem; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
+            .hero-title { font-size: 3.5rem; }
+            .hero-sub { font-size: 1.8rem; }
+        }
+    </style>
+</henad>
+<body>
+
+    <!-- NAVIGATION — YOUR LOGO KEPT EXACTLY AS <img> -->
+    <nav class="navbar">
+        <div class="logo-area">
+            <img src="logo.png" alt="GOT Namibia logo" class="brand-logo">
+            <div class="logo-text">
+                Girls of Tomorrow <small>Namibia</small>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#mission">Mission</a></li>
+            <li><a href="#programs">Programs</a></li>
+            <li><a href="#impact">Impact</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO SLIDESHOW — YOUR BACKGROUND IMAGES (kids.jpg, abstract C, and the SVG) REMAIN -->
+    <div id="home" class="hero-slideshow">
+        <div class="slide active" style="background-image: url('kids.jpg')">
+            <div class="slide-overlay">
+                <h1 class="hero-title">She's <span>G.O.T.</span> it. 🇳🇦</h1>
+                <div class="hero-sub">Inform • Inspire • Transform</div>
+                <div class="hero-tagline">Empowering Namibian girls to lead</div>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('com.jpg')"> <!-- your original 'C' kept -->
+            <div class="slide-overlay">
+                <h1 class="hero-title">Community <span>Care</span></h1>
+                <div class="hero-sub">Winter Drive • Okahandja</div>
+                <div class="hero-tagline">Warmth, nourishment & dignity</div>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('hug2.jpg')">
+            <div class="slide-overlay">
+                <h1 class="hero-title">Health & <span>Advocacy</span></h1>
+                <div class="hero-sub">World Cancer Day • Awareness</div>
+                <div class="hero-tagline">Knowledge is power</div>
+            </div>
+        </div>
+        <div class="slide-dots">
+            <span class="dot active-dot" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+        </div>
+    </div>
+
+    <!-- MISSION (image placeholder kept) -->
+    <section id="mission">
+        <h2 class="section-title">Our Mission in Namibia</h2>
+        <div class="mission-wrap">
+            <div class="mission-text">
+                <span style="font-size: 2.5rem;">👧🏾🌍</span>
+                <p style="margin-top: 1rem;"><strong>Inform. Inspire. Transform.</strong> Girls of Tomorrow Namibia is dedicated to advocating for the safety, dignity, and rights of every young girl. We ensure their voices are heard and their futures protected, creating a world where all girls are safe to live, learn, and grow without fear.</p>
+            </div>
+            <div class="mission-img-placeholder" style="background-image: url('chii.jpg');"></div>
+        </div>
+    </section>
+
+    <!-- PROGRAMS — YOUR CARD IMAGES (com.jpg, hug.jpg, comu.jpg, staf.jpg) NOW PROPERLY LINKED -->
+    <section id="programs">
+        <h2 class="section-title">Our Programs</h2>
+        <div class="program-grid">
+            <div class="program-card">
+                <div class="card-img card-img-1"></div>  <!-- com.jpg -->
+                <div class="card-content">
+                    <h3>Community Care & Winter Drive</h3>
+                    <p>Okahandja Informal Settlement: coats, blankets, gloves, and food. Your generosity warms hearts.</p>
+                </div>
+            </div>
+            <div class="program-card">
+                <div class="card-img card-img-2"></div>  <!-- hug.jpg -->
+                <div class="card-content">
+                    <h3>Health & Wellness Advocacy</h3>
+                    <p>World Cancer Day, prevention, early detection. Promoting healthy habits for brighter futures.</p>
+                </div>
+            </div>
+            <div class="program-card">
+                <div class="card-img card-img-3"></div>  <!-- comu.jpg -->
+                <div class="card-content">
+                    <h3>Safety & Advocacy</h3>
+                    <p>Standing against violence, protecting rights. No child should ever face such harm.</p>
+                </div>
+            </div>
+            <div class="program-card">
+                <div class="card-img card-img-4"></div>  <!-- staf.jpg -->
+                <div class="card-content">
+                    <h3>Collaborative Events</h3>
+                    <p>Partnerships with @iam_martinnankela and others, creating joy and lasting impact.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPACT — images (SVG kept) -->
+    <section id="impact">
+        <h2 class="section-title">Our Impact in Action</h2>
+        <div class="impact-grid">
+            <div class="impact-row">
+                <div class="impact-img"></div>
+                <div class="impact-quote">“Today we had the honour of celebrating with @iam_martinnankela — fun activities, goodies, laughter, connection.”</div>
+            </div>
+            <div class="impact-row">
+                <div class="impact-img"></div>
+                <div class="impact-quote">“Winter Drive at Okahandja Informal Settlement: your generosity warmed hearts. Even our President joined the fun.”</div>
+            </div>
+            <div class="impact-row">
+                <div class="impact-img"></div>
+                <div class="impact-quote">“In the face of tragedy, we stand with families. Our commitment to safety grows stronger.” <br>— Media release 28 April 2025</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT — image placeholder kept -->
+    <section id="contact">
+        <h2 class="section-title center">Stand With Us</h2>
+        <div class="contact-cta">
+            <div class="contact-flex">
+                <div class="contact-text">
+                    <h3 style="font-size: 2.5rem; color: #f4c542;">Empower her to be a leader.</h3>
+                    <p style="font-size: 1.4rem; margin: 1rem 0;">Creativity. Determination. Work Ethic. She has the power to transform her community.</p>
+                    <p style="margin: 2rem 0;">Support with a hand, not a hand-out. Donate, partner, or volunteer.</p>
+                    <a href="mailto:tuwilikashimhanda@gmail.com" class="button">Email us</a>
+                </div>
+                <div class="contact-image-placeholder" ></div>
+            </div>
+            <div style="margin-top: 3rem; background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 40px;">
+                <p><strong>Alicia Makoi, Founder</strong> · <strong>Iris Shimhanda, Spokesperson</strong><br>
+                📧 tuwilikashimhanda@gmail.com · 📞 +264 81 6763984<br>
+                📸 @gotnamibia</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p><strong>Girls of Tomorrow Namibia</strong> — Inform • Inspire • Transform 👧🏾🌍</p>
+        <p>🇳🇦 Windhoek · Okahandja · Namibia<br>© 2026 GOT Namibia. All rights reserved.</p>
+    </footer>
+
+    <!-- slideshow script (unchanged, functional) -->
+    <script>
+        let slides = document.querySelectorAll('.slide');
+        let dots = document.querySelectorAll('.dot');
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            if (index >= slides.length) index = 0;
+            if (index < 0) index = slides.length - 1;
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active-dot'));
+            slides[index].classList.add('active');
+            dots[index].classList.add('active-dot');
+            currentIndex = index;
+        }
+
+        window.currentSlide = function(index) {
+            showSlide(index);
+        };
+
+        setInterval(() => {
+            showSlide(currentIndex + 1);
+        }, 5000);
+    </script>
+</body>
+</html>
