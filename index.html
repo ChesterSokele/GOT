@@ -17,9 +17,10 @@
             color: #111;
             background-color: #fcfcfc;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        /* ----- navigation (logo kept, refined) ----- */
+        /* ----- navigation (circular logo frame) ----- */
         .navbar {
             background: white;
             box-shadow: 0 6px 18px rgba(0, 40, 30, 0.08);
@@ -39,12 +40,25 @@
             gap: 1rem;
         }
 
-        /* your logo image appears here exactly as you placed it */
+        /* circular frame for the logo */
+        .brand-logo-frame {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #0b3b2f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #f4c542;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
         .brand-logo {
-            width: auto;
-            height: 60px;
-            max-width: 180px;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;      /* makes sure logo fills circle */
+            background-color: #fff;
         }
 
         .logo-text {
@@ -81,7 +95,7 @@
             color: #0b3b2f;
         }
 
-        /* ----- hero slideshow (your background images remain) ----- */
+        /* ----- hero slideshow (unchanged) ----- */
         .hero-slideshow {
             height: 85vh;
             min-height: 600px;
@@ -174,7 +188,7 @@
             border-color: white;
         }
 
-        /* ----- sections ----- */
+        /* ----- sections general ----- */
         section {
             padding: 5rem 2rem;
             max-width: 1300px;
@@ -208,7 +222,7 @@
             transform: translateX(-50%);
         }
 
-        /* ----- mission (image kept) ----- */
+        /* ----- mission (unchanged) ----- */
         .mission-wrap {
             display: flex;
             gap: 3rem;
@@ -230,7 +244,6 @@
             min-width: 250px;
             height: 300px;
             border-radius: 40px;
-            /* your original svg image inside — untouched */
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="%230b3b2f" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5.5 20v-2a6 6 0 0 1 12 0v2"/><path d="M16 11.5A6 6 0 0 1 21 17v2"/><path d="M8 11.5A6 6 0 0 0 3 17v2"/></svg>');
             background-repeat: no-repeat;
             background-position: center;
@@ -238,7 +251,7 @@
             background-color: #d9e3df;
         }
 
-        /* ----- programs cards with your images (I fixed the broken syntax) ----- */
+        /* ----- programs cards (your images) ----- */
         .program-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -260,7 +273,6 @@
             box-shadow: 0 20px 35px rgba(11,59,47,0.15);
         }
 
-        /* consistent card image area — now using your exact background-image references */
         .card-img {
             height: 220px;
             background-size: cover;
@@ -268,7 +280,6 @@
             background-repeat: no-repeat;
         }
 
-        /* your original image filenames: com.jpg, hug.jpg, comu.jpg, staf.jpg  (preserved) */
         .card-img-1 { background-image: url('com.jpg'); }
         .card-img-2 { background-image: url('hug.jpg'); }
         .card-img-3 { background-image: url('comu.jpg'); }
@@ -284,7 +295,82 @@
             color: #0b3b2f;
         }
 
-        /* impact section (images preserved as svg patterns) */
+        /* ----- Ways to Help section (cards with animation) ----- */
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .help-card {
+            background: white;
+            border-radius: 32px;
+            padding: 2.5rem 1.8rem;
+            box-shadow: 0 15px 30px rgba(0, 40, 30, 0.1);
+            text-align: center;
+            border: 1px solid #f0f3f1;
+            transition: transform 0.3s ease, box-shadow 0.3s;
+            opacity: 0; /* hidden until scroll reveal */
+            transform: translateX(var(--start, 0)) translateY(var(--start-y, 0)) scale(0.95);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+            will-change: transform, opacity;
+        }
+
+        .help-card.reveal {
+            opacity: 1;
+            transform: translateX(0) translateY(0) scale(1);
+        }
+
+        .help-card:nth-child(1) { --start: -80px; --start-y: 30px; } /* from left-down */
+        .help-card:nth-child(2) { --start: 80px; --start-y: -20px; } /* from right-up */
+        .help-card:nth-child(3) { --start: -60px; --start-y: -40px; } /* left-up */
+        .help-card:nth-child(4) { --start: 70px; --start-y: 40px; } /* right-down */
+
+        .help-card:hover {
+            transform: scale(1.03) translateY(-8px);
+            box-shadow: 0 25px 40px rgba(11,59,47,0.2);
+        }
+
+        .help-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .help-card h3 {
+            font-size: 1.9rem;
+            color: #0b3b2f;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .help-card p {
+            color: #2e4f41;
+            font-size: 1.1rem;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .help-btn {
+            background: #f4c542;
+            color: #0b3b2f;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid #f4c542;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .help-btn:hover {
+            background: transparent;
+            color: #f4c542;
+        }
+
+        /* impact section (unchanged) */
         .impact-grid {
             display: flex;
             flex-direction: column;
@@ -310,7 +396,6 @@
             min-width: 220px;
             height: 220px;
             border-radius: 40px;
-            /* original svg icons kept exactly */
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="%230b3b2f" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1"/><path d="M4 22h16"/><path d="M4 15h16"/><path d="M4 22V15"/><path d="M20 22V15"/></svg>');
             background-repeat: no-repeat;
             background-position: center;
@@ -325,7 +410,6 @@
             color: #1d3b32;
         }
 
-        /* ----- contact / cta (background image kept) ----- */
         .contact-cta {
             background: linear-gradient(115deg, #0b3b2f 0%, #1f6e5a 100%);
             border-radius: 50px;
@@ -405,13 +489,15 @@
             .hero-sub { font-size: 1.8rem; }
         }
     </style>
-</henad>
+</head>
 <body>
 
-    <!-- NAVIGATION — YOUR LOGO KEPT EXACTLY AS <img> -->
+    <!-- NAVIGATION with circular logo frame -->
     <nav class="navbar">
         <div class="logo-area">
-            <img src="logo.png" alt="GOT Namibia logo" class="brand-logo">
+            <div class="brand-logo-frame">
+                <img src="logo.png" alt="GOT Namibia logo" class="brand-logo" onerror="this.style.display='none'; this.parentElement.innerHTML='GOT';" style="background: #0b3b2f; color: white; font-size: 2rem; display: flex; align-items: center; justify-content: center;">
+            </div>
             <div class="logo-text">
                 Girls of Tomorrow <small>Namibia</small>
             </div>
@@ -420,12 +506,13 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#mission">Mission</a></li>
             <li><a href="#programs">Programs</a></li>
+            <li><a href="#help">Ways to Help</a></li>
             <li><a href="#impact">Impact</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
-    <!-- HERO SLIDESHOW — YOUR BACKGROUND IMAGES (kids.jpg, abstract C, and the SVG) REMAIN -->
+    <!-- HERO SLIDESHOW (unchanged) -->
     <div id="home" class="hero-slideshow">
         <div class="slide active" style="background-image: url('kids.jpg')">
             <div class="slide-overlay">
@@ -434,7 +521,7 @@
                 <div class="hero-tagline">Empowering Namibian girls to lead</div>
             </div>
         </div>
-        <div class="slide" style="background-image: url('com.jpg')"> <!-- your original 'C' kept -->
+        <div class="slide" style="background-image: url('com.jpg')">
             <div class="slide-overlay">
                 <h1 class="hero-title">Community <span>Care</span></h1>
                 <div class="hero-sub">Winter Drive • Okahandja</div>
@@ -455,7 +542,7 @@
         </div>
     </div>
 
-    <!-- MISSION (image placeholder kept) -->
+    <!-- MISSION (unchanged) -->
     <section id="mission">
         <h2 class="section-title">Our Mission in Namibia</h2>
         <div class="mission-wrap">
@@ -463,65 +550,68 @@
                 <span style="font-size: 2.5rem;">👧🏾🌍</span>
                 <p style="margin-top: 1rem;"><strong>Inform. Inspire. Transform.</strong> Girls of Tomorrow Namibia is dedicated to advocating for the safety, dignity, and rights of every young girl. We ensure their voices are heard and their futures protected, creating a world where all girls are safe to live, learn, and grow without fear.</p>
             </div>
-            <div class="mission-img-placeholder" style="background-image: url('chii.jpg');"></div>
+            <div class="mission-img-placeholder" style="background-image: url('chi.jpg');"></div>
         </div>
     </section>
 
-    <!-- PROGRAMS — YOUR CARD IMAGES (com.jpg, hug.jpg, comu.jpg, staf.jpg) NOW PROPERLY LINKED -->
+    <!-- PROGRAMS (unchanged) -->
     <section id="programs">
         <h2 class="section-title">Our Programs</h2>
         <div class="program-grid">
-            <div class="program-card">
-                <div class="card-img card-img-1"></div>  <!-- com.jpg -->
-                <div class="card-content">
-                    <h3>Community Care & Winter Drive</h3>
-                    <p>Okahandja Informal Settlement: coats, blankets, gloves, and food. Your generosity warms hearts.</p>
-                </div>
-            </div>
-            <div class="program-card">
-                <div class="card-img card-img-2"></div>  <!-- hug.jpg -->
-                <div class="card-content">
-                    <h3>Health & Wellness Advocacy</h3>
-                    <p>World Cancer Day, prevention, early detection. Promoting healthy habits for brighter futures.</p>
-                </div>
-            </div>
-            <div class="program-card">
-                <div class="card-img card-img-3"></div>  <!-- comu.jpg -->
-                <div class="card-content">
-                    <h3>Safety & Advocacy</h3>
-                    <p>Standing against violence, protecting rights. No child should ever face such harm.</p>
-                </div>
-            </div>
-            <div class="program-card">
-                <div class="card-img card-img-4"></div>  <!-- staf.jpg -->
-                <div class="card-content">
-                    <h3>Collaborative Events</h3>
-                    <p>Partnerships with @iam_martinnankela and others, creating joy and lasting impact.</p>
-                </div>
-            </div>
+            <div class="program-card"><div class="card-img card-img-1"></div><div class="card-content"><h3>Community Care & Winter Drive</h3><p>Okahandja Informal Settlement: coats, blankets, gloves, and food. Your generosity warms hearts.</p></div></div>
+            <div class="program-card"><div class="card-img card-img-2"></div><div class="card-content"><h3>Health & Wellness Advocacy</h3><p>World Cancer Day, prevention, early detection. Promoting healthy habits for brighter futures.</p></div></div>
+            <div class="program-card"><div class="card-img card-img-3"></div><div class="card-content"><h3>Safety & Advocacy</h3><p>Standing against violence, protecting rights. No child should ever face such harm.</p></div></div>
+            <div class="program-card"><div class="card-img card-img-4"></div><div class="card-content"><h3>Collaborative Events</h3><p>Partnerships with @iam_martinnankela and others, creating joy and lasting impact.</p></div></div>
         </div>
     </section>
 
-    <!-- IMPACT — images (SVG kept) -->
+    <!-- NEW WAYS TO HELP SECTION with animated cards & four specific actions -->
+    <section id="help">
+        <h2 class="section-title center">Ways to Help</h2>
+        <div class="help-grid">
+            <!-- Donate -->
+            <div class="help-card" id="help1">
+                <div class="help-icon">❤️</div>
+                <h3>Donate</h3>
+                <p>Fund supplies, education, and health for girls in need. Every dollar counts.</p>
+                <button class="help-btn" onclick="alert('Donate page (simulated)')">Give now</button>
+            </div>
+            <!-- Shop -->
+            <div class="help-card" id="help2">
+                <div class="help-icon">🛍️</div>
+                <h3>Shop</h3>
+                <p>Purchase GOT merch & crafts. Proceeds go directly to empowerment programs.</p>
+                <button class="help-btn" onclick="alert('Shop page (simulated)')">Browse</button>
+            </div>
+            <!-- Become a Penpal -->
+            <div class="help-card" id="help3">
+                <div class="help-icon">✉️</div>
+                <h3>Become a Penpal</h3>
+                <p>Exchange letters with a girl in Namibia. Mentorship, friendship, and hope.</p>
+                <button class="help-btn" onclick="alert('Penpal signup (simulated)')">Sign up</button>
+            </div>
+            <!-- Anonymous Sexual Exploitation and Abuse Form -->
+            <div class="help-card" id="help4">
+                <div class="help-icon">🛡️</div>
+                <h3>Anonymous Form</h3>
+                <p>Sexual exploitation & abuse reporting. Safe, confidential, 24/7.</p>
+                <button class="help-btn" onclick="alert('Anonymous reporting form (simulated) — your safety matters.')">Report</button>
+            </div>
+        </div>
+        <p style="text-align: center; font-size: 1.3rem; margin-top: 2rem; color: #2e4f41;">🌿 Every act of support creates a safer future for Namibian girls.</p>
+    </section>
+
+    <!-- IMPACT (unchanged) -->
     <section id="impact">
         <h2 class="section-title">Our Impact in Action</h2>
         <div class="impact-grid">
-            <div class="impact-row">
-                <div class="impact-img"></div>
-                <div class="impact-quote">“Today we had the honour of celebrating with @iam_martinnankela — fun activities, goodies, laughter, connection.”</div>
-            </div>
-            <div class="impact-row">
-                <div class="impact-img"></div>
-                <div class="impact-quote">“Winter Drive at Okahandja Informal Settlement: your generosity warmed hearts. Even our President joined the fun.”</div>
-            </div>
-            <div class="impact-row">
-                <div class="impact-img"></div>
-                <div class="impact-quote">“In the face of tragedy, we stand with families. Our commitment to safety grows stronger.” <br>— Media release 28 April 2025</div>
-            </div>
+            <div class="impact-row"><div class="impact-img"></div><div class="impact-quote">“Today we had the honour of celebrating with @iam_martinnankela — fun activities, goodies, laughter, connection.”</div></div>
+            <div class="impact-row"><div class="impact-img"></div><div class="impact-quote">“Winter Drive at Okahandja Informal Settlement: your generosity warmed hearts. Even our President joined the fun.”</div></div>
+            <div class="impact-row"><div class="impact-img"></div><div class="impact-quote">“In the face of tragedy, we stand with families. Our commitment to safety grows stronger.” <br>— Media release 28 April 2025</div></div>
         </div>
     </section>
 
-    <!-- CONTACT — image placeholder kept -->
+    <!-- CONTACT (unchanged) -->
     <section id="contact">
         <h2 class="section-title center">Stand With Us</h2>
         <div class="contact-cta">
@@ -547,7 +637,7 @@
         <p>🇳🇦 Windhoek · Okahandja · Namibia<br>© 2026 GOT Namibia. All rights reserved.</p>
     </footer>
 
-    <!-- slideshow script (unchanged, functional) -->
+    <!-- slideshow script (unchanged) -->
     <script>
         let slides = document.querySelectorAll('.slide');
         let dots = document.querySelectorAll('.dot');
@@ -570,6 +660,49 @@
         setInterval(() => {
             showSlide(currentIndex + 1);
         }, 5000);
+    </script>
+
+    <!-- Scroll reveal for help cards (from different directions) -->
+    <script>
+        (function() {
+            const cards = document.querySelectorAll('.help-card');
+            
+            function checkReveal() {
+                const windowHeight = window.innerHeight;
+                const revealThreshold = 100; // px from bottom
+                
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    // if card enters viewport (from top or bottom)
+                    if (rect.top < windowHeight - revealThreshold && rect.bottom > revealThreshold) {
+                        card.classList.add('reveal');
+                    } else {
+                        
+                        if (!card.classList.contains('reveal')) {
+                            // but to be safe we add only when condition met
+                        }
+                    }
+                    // actually easier: if in view, add class. (do not remove)
+                    if (rect.top < windowHeight - revealThreshold && rect.bottom > 100) {
+                        card.classList.add('reveal');
+                    }
+                });
+            }
+
+            // initial check
+            checkReveal();
+            // throttle scroll events
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        checkReveal();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        })();
     </script>
 </body>
 </html>
